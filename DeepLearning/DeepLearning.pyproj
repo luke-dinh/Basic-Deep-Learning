@@ -25,6 +25,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DeepLearning.py" />
+    <Compile Include="First CNN.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FirstNN.py">
       <SubType>Code</SubType>
     </Compile>
