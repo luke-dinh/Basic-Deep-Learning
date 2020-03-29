@@ -5,7 +5,9 @@ Mạng nơ-ron đơn giản nhất ta có thể thấy là mạng nơ-ron toàn 
 
 <img width="477" alt="NN" src="https://user-images.githubusercontent.com/51883796/77663506-b5e70e80-6faf-11ea-963e-2703dfa237c6.PNG">
 Tham khảo từ blog https://nttuan8.com/bai-4-backpropagation/
+
 Trong đó: 
+
 -Layer đầu tiên là input layer
 
 -Các layer ở giữa được gọi là hidden layer
@@ -49,10 +51,26 @@ Vì vậy CNN ra đời.
 
 Đầu tiên ta sẽ tìm hiểu phép toán Convolution (phép tính tích chập)
 
+Trong xử lý ảnh, ta có khái niệm kernel. Kernel là một ma trận vuông kích cỡ KxK (thông thường ta chọn K là số lẻ, lí do sẽ đề cập ở phần sau). Kí hiệu phép tính convolution (⊗), kí hiệu Y = X ⊗ W . Kernel có vai trò tính tích chập trên từng tensor và tại mỗi vị trí pixel. 
 
+Ta lấy ví dụ: 
+<img width="431" alt="NN3" src="https://user-images.githubusercontent.com/51883796/77851457-787abf00-7203-11ea-9f9c-78519930ef8e.PNG">
 
+Một cách tổng quát, Với mỗi phần tử xi j trong ma trận X lấy ra một ma trận có kích thước bằng kích thước của kernel W có phần tử x(i,j) làm trung tâm (đây là vì sao kích thước của kernel thường lẻ) gọi là ma trận A. Sau đó tính tổng các phần tử của phép tính element-wise của ma trận A và ma trận W, rồi viết vào ma trận kết quả Y. 
 
+Trong ví dụ trên, vị trí Y(1,1) của Convolved Feature được tính bằng cách nhân từng phần tử của vùng ma trận kích thước 3x3 của ảnh được kernel đè lên với từng phần tử của kernel. 
 
+Tuy nhiên thì sau khi tính tích chập, ta thấy kích cỡ của Convolved Feature bị giảm đi. Đó là bởi output của Convolved Feature sẽ trùng với center của kernel được đưa vào. Trong ví dụ trên, center của kernel được đặt tại tâm của kernel. Nếu như áp dụng công thức như trên thì vùng biên ảnh sẽ được xử lý như thế nào để output vẫn giữ nguyên kích thước ban đầu của ảnh? Phép toán Padding (mở rộng) ra đời. 
 
+<img width="403" alt="NN4" src="https://user-images.githubusercontent.com/51883796/77851949-28512c00-7206-11ea-8b28-33150f0e69c1.PNG">
 
+Sau khi được mở rộng biên thì ta có thể tính tích chập trên các phần tử ngoài biên.
+
+Trong hình ảnh ở trên, ta gọi phép tính này là convolution với padding = 1. Padding = k nghĩa là ta thêm k vecto 0 vào mỗi phía của ma trận.
+
+Mục đích của phép tính convolution trên ảnh là làm mờ, làm nét ảnh; xác định các đường;... Mỗi kernel khác nhau thì sẽ phép tính convolution sẽ có ý nghĩa khác nhau.
+
+Bây giờ ta sẽ đi vào một mạng CNN tổng quát.
+
+Giả sử ta có một tensor 3x3. (phép tính tích chập được tính như nhau trên từng tensor).
 
