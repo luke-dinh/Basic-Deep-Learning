@@ -72,5 +72,51 @@ Mục đích của phép tính convolution trên ảnh là làm mờ, làm nét 
 
 Bây giờ ta sẽ đi vào một mạng CNN tổng quát.
 
-Giả sử ta có một tensor 3x3. (phép tính tích chập được tính như nhau trên từng tensor).
+Giả sử ta có một input image kích thước H*W*D. (phép tính tích chập được tính như nhau trên từng tensor).
 
+*Tầng đầu tiên, như đã đề cập ở trên, đó chính là tầng tính tích chập (Convolutional Layer)
+
+Với kervel có kích thước F*F*D (vì phép tính chập được thực hiện như nhau trên tất cả tensor nên chiều sâu của kernel luôn bằng kernel của input image) và ta thực hiện tính tích chập trên tất cả các phần tử (được gọi là stride, trong trường hợp này thì stride bằng 1).
+
+Mô hình tổng quát: 
+
+<img width="454" alt="NN5" src="https://user-images.githubusercontent.com/51883796/77915719-23ea4900-72c2-11ea-96f1-5204d6bdd114.PNG">
+
+Lưu ý:
+
+- Output của Conv layer này trước khi trở thành input của Conv Layer khác thì sẽ đi qua hàm activation 
+
+- Tổng số parameter (đường dẫn) của 1 layer là K*(F*F*D +1)
+
+*Tầng thứ 2: Pooling Layer 
+
+Mục đích của tầng này: tầng này được đặt ở giữa các Conv layer để làm giảm kích thước dữ liệu nhưng vân giữ được các thuộc tính quan trọng của dữ liệu, từ đó sẽ dễ dàng hơn trong tính toán. 
+
+Thông thường khi dùng pooling layer thì ta sẽ lấy size = (2,2) , stride = 2, padding = 0 để giảm kích thước dữ liệu xuống còn một nữa nhưng vẫn giữ nguyên depth của nó.
+
+<img width="455" alt="NN6" src="https://user-images.githubusercontent.com/51883796/77923359-8f391880-72cc-11ea-883b-312c91e9703a.PNG">
+
+Có 2 loại pooling layer phổ biến: Max pooling hoặc Average pooling
+
+<img width="443" alt="NN7" src="https://user-images.githubusercontent.com/51883796/77923505-ba236c80-72cc-11ea-92bd-daa95d25f401.PNG">
+
+*Tầng tiếp theo: Fully Connected Layer
+
+Sau khi đã đọc được các đặc trung của ảnh thì hì tensor của output của layer cuối cùng, kích thước H*W*D, sẽ được chuyển về 1 vector kích thước (H*W*D)
+
+
+<img width="433" alt="NN8" src="https://user-images.githubusercontent.com/51883796/77923654-f060ec00-72cc-11ea-928c-25f8cbc892c2.PNG">
+
+Sau đó ta dùng các fully connected layer để kết hợp các đặc điểm của ảnh để ra được output của model.
+
+*Tổng quát:
+
+<img width="443" alt="NN9" src="https://user-images.githubusercontent.com/51883796/77923791-1e463080-72cd-11ea-8143-31776d1c77df.PNG">
+
+Tài liệu và hình ảnh được tham khảo từ: 
+
+https://nttuan8.com/bai-4-backpropagation/
+
+https://machinelearningcoban.com/2017/02/24/mlp/
+
+Nguyễn Thanh Tuấn - "Deep Learning Cơ bản" - Phần III: "Neural Network" , Phần IV: "Convolutional Neural Network" 
